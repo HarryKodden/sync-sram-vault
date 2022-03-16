@@ -1,0 +1,30 @@
+# docker-compose.yml
+
+version: '3'
+
+services:
+
+  sync:
+    build: build
+    env_file:
+      - /usr/local/env/ldap.env
+      - /usr/local/env/vault.env
+    container_name: sync_vault
+    environment:
+      LOG_LEVEL: ERROR
+      FLASK_APP: app
+      FLASK_ENV: development
+      VAULT_ADDR: http://vault:8200
+    external_links:
+      - vault:vault
+    networks:
+      - internal
+    ports:
+      - 127.0.0.1:5000:5000
+    command:
+      flask run -h 0.0.0.0 -p 5000
+
+networks:
+  internal:
+    external:
+      name: localnet

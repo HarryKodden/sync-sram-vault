@@ -1,0 +1,6 @@
+# requirements.txt
+Flask
+requests
+uWSGI
+hvac
+ldap3
